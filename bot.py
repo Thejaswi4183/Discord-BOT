@@ -41,6 +41,7 @@ async def clear(ctx: discord.ApplicationContext, amount: int):
 
     deleted = await ctx.channel.purge(limit=amount)
     await ctx.respond(f"Deleted {len(deleted)} messages.", ephemeral=True)
+
 # Slash command: /userinfo
 @bot.slash_command(name="userinfo", description="Get info about a user")
 async def userinfo(ctx: discord.ApplicationContext, member: discord.Member = None):
@@ -85,9 +86,15 @@ async def remindme(ctx: discord.ApplicationContext, seconds: int, *, reminder: s
     await ctx.followup.send(f"⏰ Reminder: {reminder}", ephemeral=True)
 
 # Slash command: /flip
-@bot.slash_command(name="flip", description="Flip a coin or roll a number from 1 to 5")
+@bot.slash_command(name="flip", description="Flip a coin")
 async def flip(ctx: discord.ApplicationContext):
     coin = random.choice(["Heads", "Tails"])
     await ctx.respond(f"Coin flip: {coin}")
+    
+# Slash command: /reverse  
+@bot.slash_command(name="reverse", description="Reverse any text you enter")
+async def reverse(ctx: discord.ApplicationContext, *, message: str):
+    reversed_text = message[::-1]
+    await ctx.respond(f"🔁 {reversed_text}")
 
 bot.run(TOKEN)
